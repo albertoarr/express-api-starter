@@ -2,13 +2,14 @@ import express, { json, urlencoded } from 'express';
 import cors from 'cors';
 import { loadControllers } from 'awilix-express';
 import { loadContainer } from '@/lib/container';
+import { authenticate } from './middlewares/auth';
 
 const app = express();
 
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(cors());
-// TODO: add middleware
+app.use(authenticate);
 
 export const container = loadContainer(app);
 

@@ -36,9 +36,9 @@ export class AuthController {
         return res.status(403).json({ message: 'Wrong credentials' });
       }
 
-      const passwordMatches = await compare(loginDto.password, userFound.password);
+      const passwordMatch = await compare(loginDto.password, userFound.password);
 
-      if (!passwordMatches) {
+      if (!passwordMatch) {
         return res.status(403).json({ message: 'Wrong credentials' });
       }
 
@@ -48,9 +48,9 @@ export class AuthController {
         throw new Error('Error mapping to UserDTO');
       }
 
-      const token = this.jwtService.generateToken(user.dto);
+      const jwt = this.jwtService.generateToken(user.dto);
 
-      return res.status(200).json({ user: user.dto, token });
+      return res.status(200).json({ user: user.dto, jwt });
     } catch {
       return res.status(500).json({
         message: 'Something went wrong, please try again.'
